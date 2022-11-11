@@ -37,23 +37,39 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
+import { api } from 'boot/axios'
 export default defineComponent({
   name: 'IndexPage',
   setup() {
 
 
     const user = ref({
-      email: '',
-      password: ''
+      email: 'ariel12jona@gmail.com',
+      password: 'jonas123'
     })
     const loading = ref([false])
     const progress = ref(false)
 
-    const save = (number) => {
-      console.log(user.value.email, user.value.password);
+
+
+    const save = async (number) => {
 
       // we set loading state
       loading.value[number] = true
+
+
+
+
+      try {
+        api.post('/auth/login', {
+          email: user.value.email,
+          password: user.value.password
+        });
+      } catch (error) {
+        console.log(error);
+      }
+
+
 
       // simulate a delay
       setTimeout(() => {
